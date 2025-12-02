@@ -8,11 +8,12 @@
     <style>
         /* --- LUXURY COLOR PALETTE --- */
         :root {
-            --primary-color: #0A1931; /* Deep Navy Blue (Primary Text/Dark Element) */
+            --primary-color: #C0A376; /* TEXT: Rich Gold (Now used for main titles/headers to stand out) */
+            --secondary-text-color: #E0E0E0; /* Light Gray for main body text */
             --accent-color: #C0A376;  /* Rich Gold/Bronze (Highlight/Price) */
-            --background-color: #755E3D; /* Crisp Cream/Off-White */
-            --card-background: #FFFFFF; /* Pure White Card */
-            --shadow-lux: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --background-start: #1A222B; /* Deep Charcoal Blue (New Dark Base) */
+            --card-background: #FFFFFF; /* Pure White Card (High Contrast) */
+            --shadow-lux: 0 6px 15px rgba(0, 0, 0, 0.4); /* Darker shadow for dark background */
         }
 
         /* --- GLOBAL STYLES & FONT IMPORT --- */
@@ -209,7 +210,7 @@
         // Function to change the background color
         function changeAmbientColor() {
             // Get the next color in the sequence
-            colorIndex = (colorIndex + 10) % colors.length;
+            colorIndex = (colorIndex + 2) % colors.length;
             
             // Apply the new color to the body's background
             body.style.backgroundColor = colors[colorIndex];
