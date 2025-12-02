@@ -196,32 +196,5 @@
 
         </div>
     </div>
-    <script>
-        // Define the subtle, luxury color palette (very light, cool colors)
-        const colors = [
-            '#F7F5F0', // Creamy White (Original)
-            '#F4F31D', // Slightly Cooler Cream
-            '#F5F5F5'  // Very Light Grey
-        ];
-
-        let colorIndex = 0;
-        const body = document.body;
-
-        // Function to change the background color
-        function changeAmbientColor() {
-            // Get the next color in the sequence
-            colorIndex = (colorIndex + 5) % colors.length;
-            
-            // Apply the new color to the body's background
-            body.style.backgroundColor = colors[colorIndex];
-        }
-
-        // Set the color change to happen every 15,000 milliseconds (15 seconds)
-        // Note: The CSS transition property controls the speed of the animation.
-        setInterval(changeAmbientColor, 15000);
-
-        // Initial call to set the first transition in motion
-        changeAmbientColor();
-     </script>
 </body>
 </html>
