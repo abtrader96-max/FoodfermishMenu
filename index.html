@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> FoodFermaish - Menu</title>
+    <title>The Grand Imperial - Opulence Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
         /* --- RICH & MUTED OPULENCE COLOR PALETTE --- */
@@ -16,7 +16,7 @@
             --shadow-lux: 0 6px 15px rgba(0, 0, 0, 0.5); 
         }
 
-        /* --- GLOBAL STYLES & FONT IMPORT --- */
+        /* --- GLOBAL STYLES --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -25,29 +25,26 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--primary-color);
+            background-color: var(--background-start); 
+            color: var(--secondary-text-color); 
             line-height: 1.6;
             padding: 60px 20px;
+            transition: background-color 15s ease-in-out; 
         }
 
         /* --- HEADER & TITLE --- */
-        .menu-container {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        .menu-container { max-width: 900px; margin: 0 auto; text-align: center; }
 
         .menu-header h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem; /* Slightly larger title */
-            color: var(--primary-color);
+            font-size: 4rem; 
+            color: var(--primary-color); /* Sienna Title */
             margin-bottom: 10px;
             letter-spacing: 4px;
             text-transform: uppercase;
         }
         
-        /* Subtle Gold Line Under Title */
+        /* Bronze Line Under Title */
         .menu-header h1:after {
             content: '';
             display: block;
@@ -59,7 +56,7 @@
 
         .menu-header p {
             font-size: 1.3rem;
-            color: #555;
+            color: #AAAAAA; 
             margin-bottom: 50px;
             font-style: italic;
             font-weight: 300;
@@ -69,73 +66,68 @@
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 35px; /* Increased gap for a more spaced-out feel */
+            gap: 35px; 
         }
 
         .menu-item {
-            background-color: var(--card-background);
-            padding: 30px; /* More padding */
+            background-color: var(--card-background); /* Deep Olive Card */
+            padding: 30px; 
             border-radius: 5px;
             box-shadow: var(--shadow-lux);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             text-align: left;
-            border: 1px solid #EEE; /* Very subtle border */
+            border: 1px solid #4D4D4D; /* Dark border to ground the card */
         }
 
         .menu-item:hover {
-            transform: translateY(-8px); /* Deeper lift on hover */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- ITEM CONTENT STYLES --- */
+        /* --- ITEM CONTENT STYLES (Light text on Dark Card) --- */
         .item-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Align names better if they wrap */
+            align-items: flex-start;
             margin-bottom: 12px;
             padding-bottom: 8px;
-            border-bottom: 1px solid var(--accent-color); /* Gold separating line */
+            border-bottom: 1px solid var(--accent-color); 
         }
 
         .item-header h2 {
             font-family: 'Playfair Display', serif;
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: var(--secondary-text-color); /* Light text on card */
             font-weight: 700;
         }
 
         .item-price {
             font-size: 1.8rem;
-            color: var(--accent-color); /* Gold price highlight */
+            color: var(--accent-color); /* Bronze/Gold price highlight */
             font-weight: 700;
             margin-left: 15px;
         }
 
         .item-description {
             font-size: 1rem;
-            color: #ff4;
+            color: #C0C0C0; /* Slightly muted description text */
             margin-bottom: 15px;
             font-weight: 400;
         }
 
         .item-tags {
             font-size: 0.85rem;
-            color: #888;
+            color: #888888; 
             text-transform: uppercase;
             letter-spacing: 2px;
             padding-top: 10px;
-            border-top: 1px dotted #DDD;
+            border-top: 1px dotted #555555;
         }
 
         /* --- RESPONSIVENESS --- */
         @media (max-width: 600px) {
-            .menu-header h1 {
-                font-size: 3rem;
-            }
-
-            body {
-                padding: 30px 15px;
-            }
+            .menu-header h1 { font-size: 3rem; }
+            body { padding: 30px 15px; }
         }
     </style>
 </head>
@@ -143,34 +135,24 @@
 
     <div class="menu-container">
         <div class="menu-header">
-            <h1> FoodFermaish Menu</h1>
+            <h1>The Grand Imperial Menu</h1>
             <p>An exquisite collection of culinary masterpieces.</p>
         </div>
 
         <div class="menu-grid">
-
-            <div class="menu-item">
-                <div class="item-header">
-                    <h2>Truffle Mushroom Risotto</h2>
-                    <span class="item-price">₹300</span>
-                </div>
-                <p class="item-description">Creamy Arborio rice slow-cooked with wild Italian Porcini mushrooms, finished with shavings of premium Périgord black truffle.</p>
-                <p class="item-tags">Vegetarian | Signature Dish</p>
-            </div>
-
             <div class="menu-item">
                 <div class="item-header">
                     <h2>Seared Chilean Sea Bass</h2>
-                    <span class="item-price"> ₹400 </span>
+                    <span class="item-price">$38</span>
                 </div>
                 <p class="item-description">Perfectly pan-seared sea bass, accompanied by saffron-risotto cakes and a delicate Champagne-chive reduction sauce.</p>
-                <p class="item-tags">Seafood | Gluten-Free</p>
+                <p class="item-tags">Seafood | Signature Dish</p>
             </div>
 
             <div class="menu-item">
                 <div class="item-header">
                     <h2>Wagyu Tenderloin Mignon</h2>
-                    <span class="item-price"> ₹300 </span>
+                    <span class="item-price">$65</span>
                 </div>
                 <p class="item-description">Grade A5 Wagyu beef tenderloin, served with fondant potatoes, asparagus spears, and a rich, deeply flavored port wine jus.</p>
                 <p class="item-tags">Chef's Privilege | Premium Beef</p>
@@ -179,7 +161,7 @@
             <div class="menu-item">
                 <div class="item-header">
                     <h2>Oyster & Caviar Selection</h2>
-                    <span class="item-price"> ₹500  </span>
+                    <span class="item-price">$45</span>
                 </div>
                 <p class="item-description">Six freshly shucked Kumamoto oysters paired with a spoonful of fine Osetra caviar and classic mignonette.</p>
                 <p class="item-tags">Appetizer | Market Price</p>
@@ -187,14 +169,47 @@
 
             <div class="menu-item">
                 <div class="item-header">
-                    <h2>Valrhona Chocolate Dome</h2>
-                    <span class="item-price"> ₹350 </span>
+                    <h2>Truffle Mushroom Risotto</h2>
+                    <span class="item-price">$28</span>
                 </div>
-                <p class="item-description">A signature dessert: dark Valrhona chocolate dome melting away under a warm caramel drizzle to reveal a rich mousse center.</p>
+                <p class="item-description">Creamy Arborio rice slow-cooked with wild Italian Porcini mushrooms, finished with shavings of premium Périgord black truffle.</p>
+                <p class="item-tags">Vegetarian | House Special</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Valrhona Chocolate Dome</h2>
+                    <span class="item-price">$16</span>
+                </div>
+                <p class="item-description">Decadent warm chocolate cake with a molten center, served with vanilla bean ice cream and fresh berries.</p>
                 <p class="item-tags">Dessert | Connoisseur's Choice</p>
             </div>
 
         </div>
     </div>
+
+    <script>
+        // Define the subtle, rich charcoal color palette for ambience
+        const colors = [
+            '#282828', // Deep Charcoal Brown (Start)
+            '#2A2A2A', // Slightly darker shade
+            '#262626'  // Slightly lighter shade
+        ];
+
+        let colorIndex = 0;
+        const body = document.body;
+
+        // Function to change the background color
+        function changeAmbientColor() {
+            colorIndex = (colorIndex + 1) % colors.length;
+            body.style.backgroundColor = colors[colorIndex];
+        }
+
+        // Set the color change to happen every 15,000 milliseconds (15 seconds)
+        setInterval(changeAmbientColor, 15000);
+
+        // Initial call to set the first transition in motion
+        changeAmbientColor();
+    </script>
 </body>
 </html>
