@@ -3,134 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍽️ Tiled Food Menu</title>
+    <title>The Gourmet Bistro - Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        /* General Body Styling */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-            color: #333;
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        /* --- GLOBAL STYLES & FONT IMPORT --- */
+        :root {
+            --primary-color: #333333; /* Dark Charcoal for Text */
+            --accent-color: #A0522D;  /* Earthy Brown/Sienna for Accent */
+            --background-color: #F8F8F8; /* Light Off-White/Grey */
+            --card-background: #FFFFFF; /* Pure White Card */
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
-        /* Menu Container */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        /* --- HEADER & TITLE --- */
         .menu-container {
             max-width: 900px;
-            width: 100%;
+            margin: 0 auto;
             text-align: center;
         }
 
-        /* Header Styling */
-        .menu-container h1 {
-            color: #2980b9; /* A professional blue color */
-            font-size: 3em;
-            margin-bottom: 5px;
+        .menu-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            border-bottom: 3px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 5px;
         }
 
-        /* Subtitle */
-        .menu-container p {
-            color: #7f8c8d;
-            font-size: 1.2em;
+        .menu-header p {
+            font-size: 1.2rem;
+            color: #777;
             margin-bottom: 40px;
-            border-bottom: 2px solid #bdc3c7;
-            padding-bottom: 15px;
+            font-style: italic;
         }
 
-        /* Menu Grid */
+        /* --- MENU ITEMS GRID --- */
         .menu-grid {
             display: grid;
-            /* Creates a responsive grid: 
-               At least 250px wide tiles, fitting as many as possible */
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 0;
-            list-style: none;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
-        /* Tile Styling (Individual Menu Item) */
-        .menu-tile {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .menu-item {
+            background-color: var(--card-background);
             padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-light);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- ITEM CONTENT STYLES --- */
+        .item-header {
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            border-left: 5px solid #e74c3c; /* Accent color on the side */
-        }
-
-        .menu-tile:hover {
-            transform: translateY(-5px); /* Lift effect on hover */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-            border-left-color: #f39c12; /* Color change on hover */
-        }
-
-        /* Item Name */
-        .item-name {
-            font-weight: 600;
-            font-size: 1.5em;
-            color: #2c3e50;
             margin-bottom: 10px;
-            text-align: center;
+            border-bottom: 1px dashed #DDD;
+            padding-bottom: 5px;
         }
 
-        /* Price Tag */
+        .item-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
         .item-price {
-            font-size: 1.8em;
-            color: #e74c3c; /* Primary price color */
-            font-weight: bold;
-            background-color: #fff0f0;
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: 1px solid #e74c3c;
-            margin-top: 10px;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
         }
 
-        /* Currency Styling */
-        .currency {
-            font-size: 0.6em;
-            font-weight: normal;
-            vertical-align: top;
-            margin-right: 2px;
+        .item-description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+
+        .item-tags {
+            font-size: 0.8rem;
+            color: #AAA;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- RESPONSIVENESS (Optional, but good practice) --- */
+        @media (max-width: 600px) {
+            .menu-header h1 {
+                font-size: 2.5rem;
+            }
+
+            body {
+                padding: 20px 10px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="menu-container">
-        <h1>Our Delicious Offerings</h1>
-        <p>Hand-crafted snacks and beverages, made fresh daily.</p>
+        <div class="menu-header">
+            <h1>Our Signature Menu</h1>
+            <p>Handcrafted dishes made with the freshest, locally sourced ingredients.</p>
+        </div>
 
-        <ul class="menu-grid">
-            <li class="menu-tile">
-                <span class="item-name">Vada Pav</span>
-                <span class="item-price"><span class="currency">₹</span>10</span>
-            </li>
-            <li class="menu-tile">
-                <span class="item-name">Misal Pav</span>
-                <span class="item-price"><span class="currency">₹</span>50</span>
-            </li>
-            <li class="menu-tile">
-                <span class="item-name">Tea</span>
-                <span class="item-price"><span class="currency">₹</span>10</span>
-            </li>
-            <li class="menu-tile">
-                <span class="item-name">Coffee</span>
-                <span class="item-price"><span class="currency">₹</span>20</span>
-            </li>
-            <li class="menu-tile">
-                <span class="item-name">Dosa</span>
-                <span class="item-price"><span class="currency">₹</span>50</span>
-            </li>
-        </ul>
+        <div class="menu-grid">
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Truffle Mushroom Risotto</h2>
+                    <span class="item-price">$28</span>
+                </div>
+                <p class="item-description">Creamy Arborio rice slow-cooked with wild mushrooms, white wine, and finished with a drizzle of premium white truffle oil.</p>
+                <p class="item-tags">Vegetarian | House Special</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Seared Scallops & Lemon</h2>
+                    <span class="item-price">$35</span>
+                </div>
+                <p class="item-description">Pan-seared Atlantic scallops served over a bed of saffron-infused mashed potatoes with a light lemon-butter sauce.</p>
+                <p class="item-tags">Seafood | Gluten-Free</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Classic Steak Frites</h2>
+                    <span class="item-price">$32</span>
+                </div>
+                <p class="item-description">8oz expertly grilled New York strip steak, accompanied by crispy hand-cut rosemary fries and a savory garlic aioli.</p>
+                <p class="item-tags">Chef's Recommendation | Beef</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Spicy Lobster Bisque</h2>
+                    <span class="item-price">$18</span>
+                </div>
+                <p class="item-description">A rich, creamy lobster soup with a subtle kick of chili, finished with a splash of sherry and fresh chives.</p>
+                <p class="item-tags">Soup | Rich & Creamy</p>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-header">
+                    <h2>Chocolate Lava Cake</h2>
+                    <span class="item-price">$14</span>
+                </div>
+                <p class="item-description">Decadent warm chocolate cake with a molten center, served with vanilla bean ice cream and fresh berries.</p>
+                <p class="item-tags">Dessert | Must Try</p>
+            </div>
+
+        </div>
     </div>
 
 </body>
