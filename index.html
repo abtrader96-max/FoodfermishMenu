@@ -9,7 +9,7 @@
         /* --- LUXURY COLOR PALETTE --- */
         :root {
             --primary-color: #00FFFF; /* TEXT: Rich Gold (Now used for main titles/headers to stand out) */
-            --secondary-text-color: #FF1493; /* Light Gray for main body text */
+            --secondary-text-color: #FF149F; /* Light Gray for main body text */
             --accent-color: #B0C4DE;  /* Rich Gold/Bronze (Highlight/Price) */
             --background-start: #080808; /* Deep Charcoal Blue (New Dark Base) */
             --card-background: #FFFFFF; /* Pure White Card (High Contrast) */
@@ -210,7 +210,7 @@
         // Function to change the background color
         function changeAmbientColor() {
             // Get the next color in the sequence
-            colorIndex = (colorIndex + 2) % colors.length;
+            colorIndex = (colorIndex + 5) % colors.length;
             
             // Apply the new color to the body's background
             body.style.backgroundColor = colors[colorIndex];
