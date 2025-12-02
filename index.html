@@ -10,7 +10,7 @@
         :root {
             --primary-color: #0A1931; /* Deep Navy Blue (Primary Text/Dark Element) */
             --accent-color: #C0A376;  /* Rich Gold/Bronze (Highlight/Price) */
-            --background-color: #F7F5F0; /* Crisp Cream/Off-White */
+            --background-color: #755E3D; /* Crisp Cream/Off-White */
             --card-background: #FFFFFF; /* Pure White Card */
             --shadow-lux: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
@@ -209,7 +209,7 @@
         // Function to change the background color
         function changeAmbientColor() {
             // Get the next color in the sequence
-            colorIndex = (colorIndex + 1) % colors.length;
+            colorIndex = (colorIndex + 10) % colors.length;
             
             // Apply the new color to the body's background
             body.style.backgroundColor = colors[colorIndex];
