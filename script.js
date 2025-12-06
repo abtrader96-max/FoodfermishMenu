@@ -6,8 +6,9 @@ const APP_ID = 'application-0-ngogldp';
 const app = new Realm.App({ id: APP_ID });
 
 async function fetchDataAndDisplay() {
+    alert('test');
     const dataList = document.getElementById('data-list');
-    dataList.innerHTML = ''; 
+    dataList.innerHTML = 'initial'; 
 
     try {
         // 1. Securely log in as an anonymous user 
@@ -16,7 +17,7 @@ async function fetchDataAndDisplay() {
         // 2. Call the serverless function you created in Atlas App Services
         // Replace 'getPublicData' with the name of your Atlas function
         const data = await user.functions.Fun();
-        dataList.innerHTML = 'count = '+data.length;
+        dataList.innerHTML = 'count = ';
         /*
         if (data.length === 0) {
             dataList.innerHTML = '<li>No data found.</li>';
