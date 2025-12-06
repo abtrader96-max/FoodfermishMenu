@@ -1,7 +1,7 @@
 // script.js
 
 // 🚨 IMPORTANT: Replace this with your actual MongoDB Atlas App Services Client App ID
-const APP_ID = 'application-0-ngogldp'; 
+const APP_ID = 'mdb_sa_id_6933921a5eb7e670f3487259'; 
 
 const app = new **Realm.App({ id: APP_ID })**; 
 
