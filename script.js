@@ -1,5 +1,5 @@
 // script.js (Your file hosted on GitHub Pages)
-
+alert("Test Alert: Script Loaded!");
 // 🚨 1. PASTE YOUR CONNECTION DETAILS HERE:
 const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; // e.g., 'https://xxxx.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; // This key is safe to expose
