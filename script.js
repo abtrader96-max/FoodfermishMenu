@@ -3,7 +3,7 @@
 // 🚨 IMPORTANT: Replace this with your actual MongoDB Atlas App Services Client App ID
 const APP_ID = 'application-0-ngogldp'; 
 
-const app = new Realm.App({ id: APP_ID });
+const app = new **Realm.App({ id: APP_ID })**; 
 
 async function fetchDataAndDisplay() {
     alert('test');
