@@ -16,7 +16,7 @@ async function fetchDataAndDisplay() {
         // 2. Call the serverless function you created in Atlas App Services
         // Replace 'getPublicData' with the name of your Atlas function
         const data = await user.functions.Fun();
-
+        dataList.innerHTML = ''+data.length;
         if (data.length === 0) {
             dataList.innerHTML = '<li>No data found.</li>';
         } else {
