@@ -3,67 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toggle Message Example</title>
-    <style>
-        /* Simple styling to make the message visible */
-        .container {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            text-align: center;
-        }
-        #toggleMessage {
-            /* Initially hide the message */
-            display: none; 
-            padding: 15px;
-            border: 2px solid #007bff;
-            background-color: #e6f3ff;
-            color: #007bff;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Supabase Connection Test</title>
 </head>
 <body>
+    
+    <h1>Supabase Connection Test</h1>
+    <p>Check the browser's **Developer Console (F12)** for the connection status and fetched data.</p>
+    
+    <div id="status">Attempting connection...</div>
 
-    <div class="container">
-        
-        <button id="toggleButton" onclick="toggleMessage()">Show Message</button>
-        
-        <div id="toggleMessage">
-            <p>👋 Hello! This is the secret message that is toggled by the button.</p>
-        </div>
-
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script>
-        // 1. Get references to the HTML elements
-        const messageElement = document.getElementById('toggleMessage');
-        const buttonElement = document.getElementById('toggleButton');
+        // 🚨 STEP 1: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL KEYS!
+        const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
+        
+        // 🚨 STEP 2: REPLACE THIS WITH THE ACTUAL NAME OF YOUR TABLE
+        const TABLE_NAME = 'Menu'; 
+
+        // 2. Initialize the Supabase Client
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        const statusElement = document.getElementById('status');
+
 
         /**
-         * Toggles the visibility of the message element.
+         * Function to test the connection by fetching one row of data.
          */
-        function toggleMessage() {
-            // Check the current display style of the message element
-            if (messageElement.style.display === 'none') {
-                // If it's hidden, show it and change the button text
-                messageElement.style.display = 'block';
-                buttonElement.textContent = 'Hide Message';
-            } else {
-                // If it's visible, hide it and change the button text
-                messageElement.style.display = 'none';
-                buttonElement.textContent = 'Show Message';
+        async function testConnection() {
+            console.log("--- Supabase Connection Test Started ---");
+            console.log("URL:", SUPABASE_URL);
+
+            statusElement.innerHTML = `Connecting to ${TABLE_NAME}...`;
+
+            try {
+                // Try to fetch data from your table (limit 1 to be fast)
+                let { data, error } = await supabase
+                    .from(TABLE_NAME)
+                    .select('*')
+                    .limit(1); // Fetch just one row for a quick test
+
+                if (error) {
+                    // RLS or Authentication Failure
+                    console.error('❌ Supabase Connection Failed (RLS/Auth Error):', error);
+                    statusElement.innerHTML = `<span style="color: red;">❌ FAILURE: ${error.message}. Check RLS Policies!</span>`;
+                    return;
+                }
+
+                if (data && data.length >= 0) {
+                    // Success!
+                    console.log('✅ Supabase Connection Successful!');
+                    console.log('Fetched Data (Sample Row):', data);
+                    statusElement.innerHTML = `<span style="color: green;">✅ SUCCESS: Connected to ${TABLE_NAME} and fetched ${data.length} sample row(s). Check Console (F12) for details.</span>`;
+                }
+
+            } catch (e) {
+                // General Network/Configuration Error
+                console.error("Fatal Connection Error:", e);
+                statusElement.innerHTML = `<span style="color: red;">❌ FATAL ERROR: Check Console for network or configuration issues.</span>`;
             }
         }
+
+        // Run the test after the page loads
+        document.addEventListener('DOMContentLoaded', testConnection);
     </script>
 
 </body>
