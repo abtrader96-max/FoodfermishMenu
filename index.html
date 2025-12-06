@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
+        alert("testing");
         // 🚨 STEP 1: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL KEYS!
         const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
@@ -45,6 +46,7 @@
                     .limit(1); // Fetch just one row for a quick test
 
                 if (error) {
+                    alert(error);
                     // RLS or Authentication Failure
                     console.error('❌ Supabase Connection Failed (RLS/Auth Error):', error);
                     statusElement.innerHTML = `<span style="color: red;">❌ FAILURE: ${error.message}. Check RLS Policies!</span>`;
@@ -59,6 +61,7 @@
                 }
 
             } catch (e) {
+                alert(e);
                 // General Network/Configuration Error
                 console.error("Fatal Connection Error:", e);
                 statusElement.innerHTML = `<span style="color: red;">❌ FATAL ERROR: Check Console for network or configuration issues.</span>`;
