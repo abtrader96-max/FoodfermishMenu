@@ -3,22 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Pages + Supabase Data Feed</title>
+    <title>Toggle Message Example</title>
     <style>
-        /* Simple CSS for better readability */
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        #data-list { list-style: none; padding: 0; }
-        #data-list li { background: #f4f4f4; margin-bottom: 5px; padding: 10px; border-radius: 4px; }
+        /* Simple styling to make the message visible */
+        .container {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        #toggleMessage {
+            /* Initially hide the message */
+            display: none; 
+            padding: 15px;
+            border: 2px solid #007bff;
+            background-color: #e6f3ff;
+            color: #007bff;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Supabase Data Feed (Hosted on GitHub Pages)</h1>
-    <ul id="data-list">
-        <li>Loading data from Supabase...</li>
-    </ul>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-    
+
+    <div class="container">
+        
+        <button id="toggleButton" onclick="toggleMessage()">Show Message</button>
+        
+        <div id="toggleMessage">
+            <p>👋 Hello! This is the secret message that is toggled by the button.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // 1. Get references to the HTML elements
+        const messageElement = document.getElementById('toggleMessage');
+        const buttonElement = document.getElementById('toggleButton');
+
+        /**
+         * Toggles the visibility of the message element.
+         */
+        function toggleMessage() {
+            // Check the current display style of the message element
+            if (messageElement.style.display === 'none') {
+                // If it's hidden, show it and change the button text
+                messageElement.style.display = 'block';
+                buttonElement.textContent = 'Hide Message';
+            } else {
+                // If it's visible, hide it and change the button text
+                messageElement.style.display = 'none';
+                buttonElement.textContent = 'Show Message';
+            }
+        }
+    </script>
+
 </body>
 </html>
