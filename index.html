@@ -19,13 +19,13 @@
         // 🚨 STEP 1: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL KEYS!
         const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
-        
+        alert("22");
         // 🚨 STEP 2: REPLACE THIS WITH THE ACTUAL NAME OF YOUR TABLE
         const TABLE_NAME = 'Menu'; 
-
+        const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`;
         // 2. Initialize the Supabase Client
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        alert (supabase);
+        //alert supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
         const statusElement = document.getElementById('status');
 
 
@@ -39,27 +39,18 @@
             statusElement.innerHTML = `Connecting to ${TABLE_NAME}...`;
 
             try {
-                alert("exe");
-                // Try to fetch data from your table (limit 1 to be fast)
-                let { data, error } = await supabase
-                    .from(TABLE_NAME)
-                    .select('*')
-                    .limit(1); // Fetch just one row for a quick test
-                 alert (data);
-                if (error) {
-                    alert(error);
-                    // RLS or Authentication Failure
-                    console.error('❌ Supabase Connection Failed (RLS/Auth Error):', error);
-                    statusElement.innerHTML = `<span style="color: red;">❌ FAILURE: ${error.message}. Check RLS Policies!</span>`;
-                    return;
-                }
+                const response = await fetch(API_ENDPOINT, {
+            method: 'GET',
+            headers: {
+                // Must pass the key in two different formats
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
-                if (data && data.length >= 0) {
-                    // Success!
-                    console.log('✅ Supabase Connection Successful!');
-                    console.log('Fetched Data (Sample Row):', data);
-                    statusElement.innerHTML = `<span style="color: green;">✅ SUCCESS: Connected to ${TABLE_NAME} and fetched ${data.length} sample row(s). Check Console (F12) for details.</span>`;
-                }
+        const result = await response.json();
+                alert (result);
 
             } catch (e) {
                 alert(e);
