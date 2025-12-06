@@ -19,7 +19,7 @@
         // 🚨 STEP 1: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL KEYS!
         const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
-        alert("22");
+        
         // 🚨 STEP 2: REPLACE THIS WITH THE ACTUAL NAME OF YOUR TABLE
         const TABLE_NAME = 'Menu'; 
         const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`;
@@ -28,7 +28,8 @@
         
         const statusElement = document.getElementById('status');
 
-
+        const dataList = document.getElementById('data-list');
+        dataList.innerHTML = '<li>Fetching data via REST API...</li>';
         /**
          * Function to test the connection by fetching one row of data.
          */
@@ -50,7 +51,7 @@
                   });
 
                 const result = await response.json();
-                alert (result);
+            
                 // --- Success: Display Data ---
                dataList.innerHTML = ''; 
 
