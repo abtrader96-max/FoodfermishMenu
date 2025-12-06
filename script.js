@@ -16,7 +16,8 @@ async function fetchDataAndDisplay() {
         // 2. Call the serverless function you created in Atlas App Services
         // Replace 'getPublicData' with the name of your Atlas function
         const data = await user.functions.Fun();
-        dataList.innerHTML = ''+data.length;
+        dataList.innerHTML = 'count = '+data.length;
+        /*
         if (data.length === 0) {
             dataList.innerHTML = '<li>No data found.</li>';
         } else {
@@ -26,10 +27,12 @@ async function fetchDataAndDisplay() {
                 li.textContent = `Document ID: ${item._id.toString()}, Field: ${item.price || 'N/A'}`;
                 dataList.appendChild(li);
             });
-        }
+        }*/
+        
     } catch (error) {
         console.error('Failed to fetch data securely:', error);
-        dataList.innerHTML = `<li>Error loading data. Check the console and ensure your Atlas App Services are configured correctly.</li>`;
+        alert(error);
+        //dataList.innerHTML = `<li>Error loading data. Check the console and ensure your Atlas App Services are configured correctly.</li>`;
     }
 }
 
