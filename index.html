@@ -51,7 +51,7 @@
                   });
 
                 const result = await response.json();
-            
+            alert ("got result");
                 // --- Success: Display Data ---
                dataList.innerHTML = ''; 
 
@@ -64,7 +64,9 @@
                 // Adjust the property names (e.g., item.name, item.value) based on your table columns
                 li.textContent = `${item.name} (Value: ${item.price})`; 
                 dataList.appendChild(li);
+                alert(${item.name});
             });
+        
         }
 
             } catch (e) {
