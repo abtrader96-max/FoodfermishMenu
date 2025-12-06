@@ -15,45 +15,46 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        
-        // 🚨 STEP 1: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL KEYS!
-        const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
-        
-        // 🚨 STEP 2: REPLACE THIS WITH THE ACTUAL NAME OF YOUR TABLE
-        const TABLE_NAME = 'Menu'; 
-        const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`;
-        // 2. Initialize the Supabase Client
-        //alert supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        const statusElement = document.getElementById('status');
+        // script.js - Using the Fetch API directly
 
-        const dataList = document.getElementById('data-list');
-        alert ("32");
-        /**
-         * Function to test the connection by fetching one row of data.
-         */
-        async function testConnection() {
-            console.log("--- Supabase Connection Test Started ---");
-            console.log("URL:", SUPABASE_URL);
+// 🚨 STEP 1: REPLACE THESE PLACEHOLDERS
+const SUPABASE_URL = 'https://jbhrditswngtnocsnyhj.supabase.co'; 
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpiaHJkaXRzd25ndG5vY3NueWhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMDMwMzgsImV4cCI6MjA4MDU3OTAzOH0.TQBG6PRldFh280By-o8o8kuyyPoAu9n4pXpfC6i3ZUg'; 
+const TABLE_NAME = 'Menu'; 
 
-            statusElement.innerHTML = `Connecting to ${TABLE_NAME}...`;
+// 2. Construct the full REST API endpoint URL
+// The format is: [Project URL]/rest/v1/[table name]?select=*
+const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`;
+alert("28");
+/**
+ * Function to Fetch and Display Data using the standard browser fetch API.
+ */
+async function fetchDataDirectly() {
+    const dataList = document.getElementById('data-list');
+    dataList.innerHTML = '<li>Fetching data via REST API...</li>';
 
-            try {
-                const response = await fetch(API_ENDPOINT, {
-                      method: 'GET',
-                      headers: {
-                     // Must pass the key in two different formats
-                     'apikey': SUPABASE_ANON_KEY,
-                     'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                     'Content-Type': 'application/json'
-                  }
-                  });
+    try {
+        const response = await fetch(API_ENDPOINT, {
+            method: 'GET',
+            headers: {
+                // Must pass the key in two different formats
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
-                const result = await response.json();
-                alert (result);
-                // --- Success: Display Data ---
-               dataList.innerHTML = ''; 
+        const result = await response.json();
+        alert(result);
+        if (!response.ok) {
+            // Check for API errors (e.g., status 401, 403, 406)
+            console.error('❌ API Error Response:', result);
+            dataList.innerHTML = `<li style="color: red;">API Error (${response.status}): ${result.message || 'Unknown error'}. Check Console.</li>`;
+            return;
+        }
+
+        // --- Success: Display Data ---
+        dataList.innerHTML = ''; 
 
         if (result.length === 0) {
             dataList.innerHTML = '<li>No data found.</li>';
@@ -62,23 +63,18 @@
             result.forEach(item => {
                 const li = document.createElement('li');
                 // Adjust the property names (e.g., item.name, item.value) based on your table columns
-                li.textContent = `${item.name} (Value: ${item.price})`; 
+                li.textContent = `${item.name} (Value: ${item.value})`; 
                 dataList.appendChild(li);
-                alert(${item.name});
             });
-        
         }
 
-            } catch (e) {
-                alert(e);
-                // General Network/Configuration Error
-                console.error("Fatal Connection Error:", e);
-                statusElement.innerHTML = `<span style="color: red;">❌ FATAL ERROR: Check Console for network or configuration issues.</span>`;
-            }
-        }
+    } catch (e) {
+        console.error("Fatal Network/CORS Error:", e);
+        dataList.innerHTML = `<li style="color: red;">❌ FATAL ERROR: Cannot reach API. Check network and CORS.</li>`;
+    }
+}
 
-        // Run the test after the page loads
-        document.addEventListener('DOMContentLoaded', testConnection);
+document.addEventListener('DOMContentLoaded', fetchDataDirectly);
     </script>
 
 </body>
