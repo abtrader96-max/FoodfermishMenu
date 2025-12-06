@@ -40,17 +40,31 @@
 
             try {
                 const response = await fetch(API_ENDPOINT, {
-            method: 'GET',
-            headers: {
-                // Must pass the key in two different formats
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json'
-            }
-        });
+                      method: 'GET',
+                      headers: {
+                     // Must pass the key in two different formats
+                     'apikey': SUPABASE_ANON_KEY,
+                     'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                     'Content-Type': 'application/json'
+                  }
+                  });
 
-        const result = await response.json();
+                const result = await response.json();
                 alert (result);
+                // --- Success: Display Data ---
+               dataList.innerHTML = ''; 
+
+        if (result.length === 0) {
+            dataList.innerHTML = '<li>No data found.</li>';
+        } else {
+            console.log('✅ Data Fetched Successfully:', result);
+            result.forEach(item => {
+                const li = document.createElement('li');
+                // Adjust the property names (e.g., item.name, item.value) based on your table columns
+                li.textContent = `${item.name} (Value: ${item.price})`; 
+                dataList.appendChild(li);
+            });
+        }
 
             } catch (e) {
                 alert(e);
