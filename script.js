@@ -9,6 +9,7 @@ const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // 3. Function to Fetch and Display Data
 async function fetchData() {
+    alert('test');
     const dataList = document.getElementById('data-list');
     dataList.innerHTML = 'Fetching........'; // Clear loading message
 
@@ -34,6 +35,7 @@ async function fetchData() {
         });
 
     } catch (error) {
+        alert(error);
         console.error("Supabase Fetch Error:", error);
         dataList.innerHTML = `<li>Error loading data: ${error.message}</li>`;
     }
