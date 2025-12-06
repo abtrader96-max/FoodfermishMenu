@@ -1,7 +1,7 @@
 // script.js
 
 // 🚨 IMPORTANT: Replace this with your actual MongoDB Atlas App Services Client App ID
-const APP_ID = 'mdb_sa_id_6933921a5eb7e670f3487259'; 
+const APP_ID = 'application-0-ngogldp'; 
 
 const app = new **Realm.App({ id: APP_ID })**; 
 
@@ -13,7 +13,7 @@ async function fetchDataAndDisplay() {
     try {
         // 1. Securely log in as an anonymous user 
         const user = await app.logIn(Realm.Credentials.anonymous());
-        
+ 
         // 2. Call the serverless function you created in Atlas App Services
         // Replace 'getPublicData' with the name of your Atlas function
         const data = await user.functions.Fun();
