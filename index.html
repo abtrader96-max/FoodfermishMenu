@@ -29,7 +29,7 @@
         const statusElement = document.getElementById('status');
 
         const dataList = document.getElementById('data-list');
-        dataList.innerHTML = '<li>Fetching data via REST API...</li>';
+        alert ("32");
         /**
          * Function to test the connection by fetching one row of data.
          */
@@ -51,7 +51,7 @@
                   });
 
                 const result = await response.json();
-            alert ("got result");
+                alert (result);
                 // --- Success: Display Data ---
                dataList.innerHTML = ''; 
 
