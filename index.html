@@ -24,7 +24,7 @@ const TABLE_NAME = 'Menu';
 
 // 2. Construct the full REST API endpoint URL
 // The format is: [Project URL]/rest/v1/[table name]?select=*
-const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=*`;
+const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=Name,Price`;
 alert("28");
 /**
  * Function to Fetch and Display Data using the standard browser fetch API.
