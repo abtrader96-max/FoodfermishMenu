@@ -25,7 +25,7 @@ const TABLE_NAME = 'Menu';
 // 2. Construct the full REST API endpoint URL
 // The format is: [Project URL]/rest/v1/[table name]?select=*
 const API_ENDPOINT = `${SUPABASE_URL}/rest/v1/${TABLE_NAME}?select=Name,Price`;
-alert("28");
+
 /**
  * Function to Fetch and Display Data using the standard browser fetch API.
  */
@@ -39,13 +39,12 @@ async function fetchDataDirectly() {
             headers: {
                 // Must pass the key in two different formats
                 'apikey': SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                'Content-Type': 'application/json'
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
             }
         });
 
         const result = await response.json();
-        alert(result);
+        
         if (!response.ok) {
             // Check for API errors (e.g., status 401, 403, 406)
             console.error('❌ API Error Response:', result);
@@ -54,7 +53,7 @@ async function fetchDataDirectly() {
         }
 
         // --- Success: Display Data ---
-        dataList.innerHTML = ''; 
+        dataList.innerHTML = 'Display data'; 
 
         if (result.length === 0) {
             dataList.innerHTML = '<li>No data found.</li>';
