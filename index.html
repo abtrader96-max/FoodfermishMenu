@@ -3,104 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet Menu Card</title>
+    <title>FoodFermish</title>
     
-    <style>
-    /* ========================================================
-    5-STAR ROYAL GRACE THEME: MIDNIGHT BLUE & BRUSHED GOLD
-    ========================================================
-    */
-    :root {
-        --color-primary-dark: #001F3F; /* Midnight Blue (Main Background) */
-        --color-accent-gold: #FFD700; /* Brushed Gold (Highlights, Prices) */
-        --color-secondary-cream: #F5F5DC; /* Cream/Off-White (Card Background) */
-        --color-text-light: #DCDCDC; /* Light Gray (Text on Dark Background) */
-        --color-text-dark: #36454F; /* Deep Charcoal (Text on Cream Background) */
-        --color-font-heading: 'Times New Roman', serif; /* Classic Serif for elegance */
-        --color-font-body: 'Georgia', serif; 
-    }
-
-    /* --- GLOBAL & BODY STYLING --- */
-    body {
-        font-family: var(--color-font-body);
-        background-color: var(--color-primary-dark); /* Dark Blue Background */
-        color: var(--color-text-light); /* Light Text */
-        margin: 0;
-        padding: 0;
-        letter-spacing: 0.5px;
-    }
-
-    /* --- HEADER STYLING --- */
-    .menu-header {
-        background-color: var(--color-primary-dark);
-        color: var(--color-accent-gold); /* Gold Heading */
-        padding: 40px 20px;
-        text-align: center;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Strong shadow for depth */
-        border-bottom: 3px solid var(--color-accent-gold); /* Gold Separator */
-    }
-
-    .menu-header h1 {
-        font-family: var(--color-font-heading);
-        font-size: 3em;
-        margin-bottom: 5px;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        font-weight: 300; /* Light font weight for luxury */
-    }
-    
-    .menu-header p {
-        font-size: 1.1em;
-        color: var(--color-text-light);
-        opacity: 0.8;
-    }
-
-    /* --- MENU CONTAINER LAYOUT --- */
-    #menu-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 40px;
-        padding: 60px 40px;
-        max-width: 1400px;
-        margin: 0 auto;
-    }
-
-    /* --- INDIVIDUAL MENU ITEM CARD STYLING --- */
-    .menu-item {
-        background-color: var(--color-secondary-cream); /* Cream Card Background */
-        color: var(--color-text-dark); /* Dark Text on Cream */
-        border: 1px solid #c9c9c9;
-        border-radius: 12px; /* Smoother corners */
-        padding: 30px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Elegant shadow */
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .menu-item:hover {
-        transform: translateY(-8px); /* More pronounced lift on hover */
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-    .item-name {
-        font-family: var(--color-font-heading);
-        color: var(--color-primary-dark); /* Dark Blue Name */
-        font-size: 1.8em;
-        margin-top: 0;
-        border-bottom: 1px solid var(--color-accent-gold); /* Subtle Gold Separator */
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
-
-    .item-description {
-        font-style: italic;
-        color: #555555;
-        line-height: 1.6;
-        margin-bottom: 20px;
-    }
-
-    .item-price {
-        font-family: 'Montserrat', sans-serif; /* Modern font for price */
 <style>
     /* ========================================================
     5-STAR NAVY BLUE & CRISP WHITE THEME
@@ -190,7 +94,26 @@
 
     .item-description {
         font-style: italic;
-        color:
+        color: #555555;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .item-price {
+        font-family: 'Times New Roman', serif;
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--color-highlight-gold); /* Highlight price in Clean Gold */
+        display: block;
+        text-align: right;
+        padding-top: 10px;
+    }
+    
+    small {
+        color: #777777;
+        font-size: 0.9em;
+    }
+</style>
 </head>
 <body>
 
