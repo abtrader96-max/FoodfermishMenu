@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Deco Grandeur Menu</title>
+    
+    <style>
+        /* ========================================================
+        5-STAR ART DECO GRANDEUR THEME: BLACK & GILDED GOLD
+        ========================================================
+        */
+        :root {
+            --color-primary-black: #121212; /* Jet Black (Main Background) */
+            --color-secondary-charcoal: #202020; /* Deep Charcoal (Header) */
+            --color-accent-gilded: #D4AF37; /* Gilded Gold (Highlights) */
+            --color-tile-ivory: #FFFFF0; /* Ivory (Tile Background) */
+            --color-text-dark: #333333; /* Charcoal Black (Text on Ivory) */
+            --color-text-light: #FFFFFF; /* White (Text on Dark Background) */
+            
+            /* --- FANCY FONT DEFINITIONS --- */
+            --font-royal-heading: 'Didot', 'Bodoni MT', serif; /* Powerful, High-Contrast Serif */
+            --font-elegant-body: 'Georgia', serif; 
+        }
+
+        /* --- GLOBAL & BODY STYLING --- */
+        body {
+            font-family: var(--font-elegant-body);
+            background-color: var(--color-primary-black); 
+            color: var(--color-text-light); 
+            margin: 0;
+            padding: 0;
+            letter-spacing: 1px;
+        }
+
+        /* --- HEADER STYLING --- */
+        .menu-header {
+            background-color: var(--color-secondary-charcoal);
+            color: var(--color-accent-gilded);
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+            border-bottom: 5px solid var(--color-accent-gilded);
+        }
+
+        .menu-header h1 {
+            font-family: var(--font-royal-heading);
+            font-size: 4em;
+            letter-spacing: 8px; 
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        
+        .menu-header p {
+            font-size: 1.5em;
+            color: var(--color-text-light);
+            opacity: 0.8;
+        }
+        
+        /* 💡 TAGLINE STYLING (Section Divider) */
+        .menu-tagline {
+            font-family: var(--font-royal-heading);
+            color: var(--color-accent-gilded);
+            text-align: center;
+            margin: 60px auto 30px; 
+            font-size: 2.2em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 400;
+            max-width: 800px;
+            padding: 10px 0;
+            border-top: 1px solid var(--color-accent-gilded);
+            border-bottom: 1px solid var(--color-accent-gilded);
+            /* Ensure the tagline spans the full width of the container */
+            grid-column: 1 / -1; 
+        }
+
+        /* --- MENU CONTAINER LAYOUT --- */
+        #menu-container {
+            /* Changed to flex for proper flow with taglines, which span full width */
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            padding: 0 50px 80px; 
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+        
+        /* Container for items within a category to manage grid */
+        .category-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            width: 100%; /* Must span full width of the main container */
+            margin-bottom: 40px; 
+        }
+
+        /* --- INDIVIDUAL MENU ITEM CARD STYLING --- */
+        .menu-item {
+            background-color: var(--color-tile-ivory); 
+            color: var(--color-text-dark);
+            border: 1px solid #c0c0c0;
+            border-radius: 2px; 
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .item-name {
+            font-family: var(--font-royal-heading);
+            color: var(--color-primary-black); 
+            font-size: 1.8em;
+            margin-top: 0;
+            border-bottom: 2px solid var(--color-accent-gilded);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .item-description {
+            font-family: var(--font-elegant-body);
+            font-style: italic;
+            color: #555555;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .item-price {
+            font-family: var(--font-royal-heading);
+            font-size: 2em;
+            font-weight: 900;
+            color: var(--color-accent-gilded);
+            display: block;
+            text-align: right;
+            padding-top: 10px;
+            border-top: 1px dotted #B8A064;
+        }
+        
+        small {
+            color: #777777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="menu-header">
+        <h1>The Grand Imperial Menu</h1>
+        <p>A collection of timeless classics and modern delicacies.</p>
+    </header>
+
+    <main id="menu-container">
+        <div id="loading-message" style="width: 100%; text-align: center; padding: 50px;">
+            Loading the menu...
+        </div>
+    </main>
+
+    <script>
+        const CSV_FILE_PATH = 'menu_data.csv'; 
+        const menuContainer = document.getElementById('menu-container');
+
+        // --- CORE JAVASCRIPT LOGIC ---
+
+        /**
+         * Fetches the CSV file content from the GitHub Pages server.
+         */
+        async function fetchCSV() {
+            try {
+                const response = await fetch(CSV_FILE_PATH);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}. Check the CSV file name and location.`);
+                }
+                return await response.text();
+            } catch (error) {
+                console.error("Error fetching CSV:", error);
+                menuContainer.innerHTML = `<div style="color: #D4AF37; width: 100%; text-align: center; padding: 50px;">
+                                            ❌ Failed to load menu data. Ensure '${CSV_FILE_PATH}' exists in the root directory.
+                                          </div>`;
+                return null;
+            }
+        }
+
+        /**
+         * Parses the raw CSV text into an array of objects.
+         */
+        function parseCSV(csvText) {
+            if (!csvText) return [];
+
+            const lines = csvText.trim().split('\n');
+            if (lines.length <= 1) return [];
+            
+            const headers = lines[0].split(',').map(header => header.trim());
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const item = {};
+                
+                for (let j = 0; j < headers.length && j < values.length; j++) {
+                    item[headers[j]] = values[j].trim();
+                }
+                data.push(item);
+            }
+            return data;
+        }
+
+        /**
+         * Groups menu items by a specified key (e.g., 'Category').
+         * @param {Array} items - Array of menu item objects.
+         * @param {string} key - The key to group by (e.g., 'Category').
+         * @returns {Object} An object where keys are categories and values are arrays of items.
+         */
+        function groupByCategory(items, key = 'Category') {
+            return items.reduce((accumulator, item) => {
+                const category = item[key] || 'Uncategorized';
+                if (!accumulator[category]) {
+                    accumulator[category] = [];
+                }
+                accumulator[category].push(item);
+                return accumulator;
+            }, {});
+        }
+
+        /**
+         * Renders the menu items, organized by category with distinct taglines.
+         * @param {Array<Object>} menuItems - Array of menu item objects.
+         */
+        function renderMenu(menuItems) {
+            menuContainer.innerHTML = ''; 
+
+            if (menuItems.length === 0) {
+                menuContainer.innerHTML = '<p style="width: 100%;">No menu items available.</p>';
+                return;
+            }
+
+            const groupedItems = groupByCategory(menuItems);
+            
+            // Iterate over each category (which will be a tagline)
+            Object.keys(groupedItems).forEach(category => {
+                const items = groupedItems[category];
+
+                // 1. CREATE THE TAGLINE (Thematic Header)
+                const tagline = document.createElement('h2');
+                tagline.className = 'menu-tagline';
+                // Customize the tagline text based on the category
+                tagline.textContent = category.toUpperCase() + ': A CULINARY MASTERPIECE'; 
+                menuContainer.appendChild(tagline);
+
+                // 2. CREATE A GROUP CONTAINER FOR THE ITEMS (to apply the grid)
+                const groupContainer = document.createElement('div');
+                groupContainer.className = 'category-group';
+                
+                // 3. RENDER ALL ITEMS IN THIS CATEGORY
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-item';
+                    
+                    card.innerHTML = `
+                        <h3 class="item-name">${item.Name}</h3>
+                        <p class="item-description">${item.Description}</p>
+                        <p class="item-price">$${parseFloat(item.Price).toFixed(2)}</p>
+                        <small>Category: ${item.Category}</small>
+                    `;
+                    
+                    groupContainer.appendChild(card);
+                });
+                
+                // Append the entire group of cards
+                menuContainer.appendChild(groupContainer);
+            });
+        }
+
+        /**
+         * Main execution function
+         */
+        async function initMenu() {
+            const csvText = await fetchCSV();
+            
+            if (csvText) {
+                const menuItems = parseCSV(csvText);
+                renderMenu(menuItems);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initMenu);
+    </script>
+</body>
+</html>
