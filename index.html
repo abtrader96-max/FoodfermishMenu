@@ -16,7 +16,7 @@
         --color-secondary-linen: #F5F5DC; /* Light Linen (Card Background) */
         --color-text-white: #FFFFFF; /* Pure White (Text on Dark Background) */
         --color-text-navy: #2C3E50; /* Navy/Charcoal (Text on Linen) */
-        --color-font-heading: 'Times New Roman', serif; /* ROYAL FONT for Headings */
+        --color-font-heading: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; /* FANCY CLASSIC SERIF */
         --color-font-body: 'Georgia', serif; /* ELEGANT FONT for Body */
     }
 
@@ -200,7 +200,7 @@
                 card.innerHTML = `
                     <h2 class="item-name">${item.Name}</h2>
                     <p class="item-description">${item.Description}</p>
-                    <p class="item-price">$${parseFloat(item.Price).toFixed(2)}</p>
+                    <p class="item-price">RS ${parseFloat(item.Price).toFixed(2)}</p>
                     <small style="color: var(--color-text);">Category: ${item.Category}</small>
                 `;
                 
