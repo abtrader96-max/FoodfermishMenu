@@ -6,98 +6,113 @@
     <title>Gourmet Menu Card</title>
     
     <style>
-        /* Premium Gold Button Example */
-.cta-button {
-    background-color: #001F3F; /* Midnight Blue */
-    color: #FFD700; /* Brushed Gold text */
-    border: 2px solid #FFD700; /* Gold border */
-    padding: 12px 30px;
-    font-size: 1.1em;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-}
+    /* ========================================================
+    5-STAR ROYAL GRACE THEME: MIDNIGHT BLUE & BRUSHED GOLD
+    ========================================================
+    */
+    :root {
+        --color-primary-dark: #001F3F; /* Midnight Blue (Main Background) */
+        --color-accent-gold: #FFD700; /* Brushed Gold (Highlights, Prices) */
+        --color-secondary-cream: #F5F5DC; /* Cream/Off-White (Card Background) */
+        --color-text-light: #DCDCDC; /* Light Gray (Text on Dark Background) */
+        --color-text-dark: #36454F; /* Deep Charcoal (Text on Cream Background) */
+        --color-font-heading: 'Times New Roman', serif; /* Classic Serif for elegance */
+        --color-font-body: 'Georgia', serif; 
+    }
 
-.cta-button:hover {
-    background-color: #FFD700; /* Gold background on hover */
-    color: #001F3F; /* Dark blue text on hover */
-    cursor: pointer;
-}
-        /* --- Color Palette and Attractive Styling --- */
-        :root {
-            --color-primary: #8b4513; /* Deep Brown/Coffee for header/accents */
-            --color-secondary: #ffc400; /* Golden Yellow for price/highlights */
-            --color-background: #fcfcfc; /* Soft Cream for page background */
-            --color-card-bg: #ffffff; /* White for card background */
-            --color-text: #36454F; /* Deep Charcoal/Slate for text */
-        }
+    /* --- GLOBAL & BODY STYLING --- */
+    body {
+        font-family: var(--color-font-body);
+        background-color: var(--color-primary-dark); /* Dark Blue Background */
+        color: var(--color-text-light); /* Light Text */
+        margin: 0;
+        padding: 0;
+        letter-spacing: 0.5px;
+    }
 
-        body {
-            font-family: 'Georgia', serif;
-            background-color: var(--color-background);
-            color: var(--color-text);
-            margin: 0;
-            padding: 0;
-        }
+    /* --- HEADER STYLING --- */
+    .menu-header {
+        background-color: var(--color-primary-dark);
+        color: var(--color-accent-gold); /* Gold Heading */
+        padding: 40px 20px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Strong shadow for depth */
+        border-bottom: 3px solid var(--color-accent-gold); /* Gold Separator */
+    }
 
-        .menu-header {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+    .menu-header h1 {
+        font-family: var(--color-font-heading);
+        font-size: 3em;
+        margin-bottom: 5px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 300; /* Light font weight for luxury */
+    }
+    
+    .menu-header p {
+        font-size: 1.1em;
+        color: var(--color-text-light);
+        opacity: 0.8;
+    }
 
-        .menu-header h1 {
-            font-size: 2.5em;
-            margin-bottom: 5px;
-        }
+    /* --- MENU CONTAINER LAYOUT --- */
+    #menu-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 40px;
+        padding: 60px 40px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
 
-        /* --- Menu Container Layout --- */
-        #menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    /* --- INDIVIDUAL MENU ITEM CARD STYLING --- */
+    .menu-item {
+        background-color: var(--color-secondary-cream); /* Cream Card Background */
+        color: var(--color-text-dark); /* Dark Text on Cream */
+        border: 1px solid #c9c9c9;
+        border-radius: 12px; /* Smoother corners */
+        padding: 30px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Elegant shadow */
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
 
-        /* --- Individual Menu Item Card Styling --- */
-        .menu-item {
-            background-color: var(--color-card-bg);
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
-            transition: transform 0.3s ease;
-        }
+    .menu-item:hover {
+        transform: translateY(-8px); /* More pronounced lift on hover */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
 
-        .menu-item:hover {
-            transform: translateY(-5px); 
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        }
+    .item-name {
+        font-family: var(--color-font-heading);
+        color: var(--color-primary-dark); /* Dark Blue Name */
+        font-size: 1.8em;
+        margin-top: 0;
+        border-bottom: 1px solid var(--color-accent-gold); /* Subtle Gold Separator */
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
 
-        .item-name {
-            color: var(--color-primary);
-            font-size: 1.5em;
-            margin-top: 0;
-            border-bottom: 2px solid var(--color-secondary); /* Golden underline */
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
+    .item-description {
+        font-style: italic;
+        color: #555555;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
 
-        .item-description {
-            font-style: italic;
-            color: #6a6a6a;
-            margin-bottom: 15px;
-        }
-
-        .item-price {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--color-secondary); /* Highlight price in golden yellow */
-        }
-    </style>
+    .item-price {
+        font-family: 'Montserrat', sans-serif; /* Modern font for price */
+        font-size: 1.7em;
+        font-weight: 700;
+        color: var(--color-accent-gold); /* Highlight price in Bold Gold */
+        display: block;
+        text-align: right;
+    }
+    
+    small {
+        color: #777777;
+        font-size: 0.9em;
+    }
+</style>
 </head>
 <body>
 
