@@ -7,111 +7,116 @@
     
 <style>
     /* ========================================================
-    5-STAR NAVY BLUE & CRISP WHITE THEME
+    5-STAR SAPPHIRE BLUE & GILDED GOLD THEME (Enhanced Typography)
     ========================================================
     */
     :root {
-        --color-primary-white: #FFFFFF; /* Crisp White (Main Background) */
-        --color-accent-navy: #001F54; /* Deep Navy Blue (Header & Headings) */
-        --color-tile-bg: #F5F7F9; /* Soft Cloud Gray (Menu Tile Background) */
-        --color-text-dark: #2C3E50; /* Navy/Charcoal (Text on Tiles) */
-        --color-highlight-gold: #E5B800; /* Clean Gold (Price Accent) */
-        --color-font-heading: 'Helvetica Neue', sans-serif; /* Modern Sans-serif for clean look */
-        --color-font-body: 'Georgia', serif; 
+        --color-primary-sapphire: #08204F; /* Sapphire Blue (Main Background) */
+        --color-accent-gilded: #C7A200; /* Gilded Gold (Highlights) */
+        --color-secondary-linen: #F5F5DC; /* Light Linen (Card Background) */
+        --color-text-white: #FFFFFF; /* Pure White (Text on Dark Background) */
+        --color-text-navy: #2C3E50; /* Navy/Charcoal (Text on Linen) */
+        --color-font-heading: 'Times New Roman', serif; /* ROYAL FONT for Headings */
+        --color-font-body: 'Georgia', serif; /* ELEGANT FONT for Body */
     }
 
     /* --- GLOBAL & BODY STYLING --- */
     body {
         font-family: var(--color-font-body);
-        background-color: var(--color-primary-white); /* Crisp White Background */
-        color: var(--color-text-dark); 
+        background-color: var(--color-primary-sapphire);
+        color: var(--color-text-white);
         margin: 0;
         padding: 0;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px; /* Increased spacing for an elevated look */
     }
 
     /* --- HEADER STYLING --- */
     .menu-header {
-        background-color: var(--color-accent-navy); /* Deep Navy Header */
-        color: var(--color-primary-white); /* White Text on Navy */
-        padding: 50px 20px;
+        background-color: #031435; 
+        color: var(--color-accent-gilded);
+        padding: 55px 20px; /* Increased padding */
         text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Clean shadow */
-        border-bottom: 4px solid var(--color-highlight-gold); /* Gold Separator */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        border-bottom: 5px double var(--color-accent-gilded);
     }
 
     .menu-header h1 {
-        font-family: var(--color-font-heading);
-        font-size: 3em;
-        margin-bottom: 5px;
-        letter-spacing: 3px;
+        font-family: var(--color-font-heading); /* Times New Roman */
+        font-size: 4em; /* Larger, more dominant heading */
+        margin-bottom: 10px;
+        letter-spacing: 5px; /* Wide letter spacing for grandeur */
         text-transform: uppercase;
-        font-weight: 500;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Deeper shadow for pop */
     }
     
     .menu-header p {
-        font-size: 1.1em;
-        opacity: 0.9;
+        font-size: 1.3em;
+        color: var(--color-text-white);
+        font-style: italic;
     }
 
     /* --- MENU CONTAINER LAYOUT --- */
     #menu-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 35px;
-        padding: 60px 40px;
-        max-width: 1300px;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 60px; /* Increased gap */
+        padding: 90px 50px; /* Increased padding */
+        max-width: 1500px;
         margin: 0 auto;
     }
 
-    /* --- INDIVIDUAL MENU ITEM TILE/CARD STYLING --- */
+    /* --- INDIVIDUAL MENU ITEM CARD STYLING --- */
     .menu-item {
-        background-color: var(--color-tile-bg); /* Soft Cloud Gray Tile Background */
-        color: var(--color-text-dark);
-        border: 1px solid #e0e0e0; 
-        border-radius: 8px;
-        padding: 30px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Very subtle shadow */
-        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        background-color: var(--color-secondary-linen);
+        color: var(--color-text-navy);
+        border: 2px solid var(--color-accent-gilded);
+        border-radius: 5px;
+        padding: 40px; /* Increased padding */
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
     .menu-item:hover {
-        transform: translateY(-5px); /* Lift up slightly */
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        border: 1px solid var(--color-highlight-gold); /* Gold border on hover */
+        transform: scale(1.03); /* More pronounced lift */
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
     }
 
     .item-name {
-        font-family: var(--color-font-heading);
-        color: var(--color-accent-navy); /* Navy Blue Name */
-        font-size: 1.7em;
+        font-family: var(--color-font-heading); /* Times New Roman */
+        color: var(--color-primary-sapphire);
+        font-size: 2.2em; /* Larger item name */
         margin-top: 0;
-        border-bottom: 1px dashed var(--color-text-dark); /* Subtle dashed separator */
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-        font-weight: 600;
+        border-bottom: 4px solid var(--color-accent-gilded); /* Thicker Gold Separator */
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+        font-weight: 700;
+        text-transform: capitalize;
     }
 
     .item-description {
+        font-family: var(--color-font-body); /* Georgia */
         font-style: italic;
         color: #555555;
-        line-height: 1.5;
-        margin-bottom: 15px;
+        line-height: 1.8; /* Increased line height for readability */
+        margin-bottom: 25px;
     }
 
     .item-price {
-        font-family: 'Times New Roman', serif;
-        font-size: 1.8em;
-        font-weight: 700;
-        color: var(--color-highlight-gold); /* Highlight price in Clean Gold */
+        font-family: var(--color-font-heading); /* Times New Roman */
+        font-size: 2.2em; /* Larger price */
+        font-weight: 900;
+        color: var(--color-accent-gilded);
         display: block;
         text-align: right;
-        padding-top: 10px;
+        border-top: 2px dotted #B4964D;
+        padding-top: 15px;
+        margin-top: 20px;
     }
     
     small {
         color: #777777;
-        font-size: 0.9em;
+        font-size: 1em;
     }
 </style>
 </head>
@@ -143,7 +148,7 @@
                 return await response.text();
             } catch (error) {
                 console.error("Error fetching CSV:", error);
-                menuContainer.innerHTML = `<div style="color: red; padding: 20px;">
+               nulluContainer.innerHTML = `<div style="color: red; padding: 20px;">
                                             ❌ Failed to load menu data. Ensure '${CSV_FILE_PATH}' exists in the root directory.
                                           </div>`;
                 return null;
