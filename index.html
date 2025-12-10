@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rotated Vertical Menu</title>
+    <title>Perfect Vertical Menu Alignment</title>
     
     <style>
         /* ========================================================
-        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER (ROTATED TEXT)
+        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER (FINAL VERTICAL ALIGNMENT)
         ========================================================
         */
         :root {
@@ -59,41 +59,35 @@
             gap: 15px;
         }
         
-        /* --- LEFT COLUMN: ROTATED VERTICAL TITLES (Category) --- */
-        .vertical-title {
-            /* Spans the height of its corresponding submenu group */
-            grid-column: 1 / 2; 
-            background-color: var(--color-dark-secondary);
-            color: var(--color-highlight-silver);
-            font-family: var(--font-heading);
-            font-size: 1.5em; /* Slightly larger text */
-            font-weight: 600;
-            text-transform: uppercase;
-            align-self: stretch; /* Stretches to match item height */
-            margin-bottom: 20px; 
-            
-            /* --- ROTATION STYLING --- */
-            display: flex;
-            align-items: center; /* Center vertically after rotation */
-            justify-content: center; /* Center horizontally after rotation */
-            
-            /* Apply the rotation */
-            transform: rotate(-90deg);
-            white-space: nowrap; /* Prevent text from wrapping */
-            
-            /* The parent container (a virtual box created by the grid) manages the overall height. 
-               We position the rotated text within that box using transformation origin. */
-            transform-origin: center center;
-        }
-        
-        /* We need a wrapper to contain the title and apply the rotation without interfering with grid alignment */
+        /* 1. TITLE WRAPPER - This spans the left column and stretches to fit the items' height */
         .title-wrapper {
             grid-column: 1 / 2;
-            display: flex; /* Use flex to control alignment */
-            align-items: center; /* Center content vertically */
-            justify-content: center; /* Center content horizontally */
-            margin-bottom: 20px;
             background-color: var(--color-dark-secondary);
+            /* Stretch the wrapper vertically to match the height of the submenu items */
+            align-self: stretch; 
+            
+            /* Use Flexbox to align the content (the rotated title) inside this wrapper */
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--color-highlight-silver);
+        }
+        
+        /* 2. VERTICAL TITLE - The actual text element which is rotated */
+        .vertical-title {
+            color: var(--color-highlight-silver);
+            font-family: var(--font-heading);
+            font-size: 1.5em; 
+            font-weight: 600;
+            text-transform: uppercase;
+            
+            /* --- ROTATION STYLING --- */
+            transform: rotate(-90deg);
+            white-space: nowrap; /* Prevent text from wrapping */
+            /* Crucial for alignment: set width/height based on text length */
+            width: max-content; 
+            height: max-content; 
         }
         
         /* --- RIGHT COLUMNS: SUBMENU ITEMS --- */
@@ -101,9 +95,10 @@
             /* Spans the remaining two columns for a multi-column item layout */
             grid-column: 2 / 4; 
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive item cards */
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
             gap: 20px;
             margin-bottom: 20px; 
+            padding-top: 5px; /* Visual balance */
         }
 
         .menu-item-card {
@@ -149,37 +144,32 @@
         /* --- RESPONSIVENESS (Mobile/Tablet) --- */
         @media (max-width: 900px) {
             #menu-container {
-                /* On smaller screens, switch to one column */
                 grid-template-columns: 1fr;
                 gap: 0;
                 padding: 0 15px;
             }
 
-            .title-wrapper, .submenu-grid {
-                grid-column: 1 / 2; /* All items/titles span full width */
-                margin-bottom: 15px;
-            }
-
             .title-wrapper {
-                height: auto; /* Remove fixed height constraint */
-                background-color: var(--color-dark-secondary);
+                grid-column: 1 / 2; 
+                height: auto; 
                 padding: 15px 0;
+                margin-bottom: 10px;
             }
             
             .vertical-title {
                 /* On mobile, un-rotate the text and align normally */
                 transform: rotate(0deg); 
                 white-space: normal; 
-                font-size: 1.4em;
-                color: var(--color-highlight-silver);
-                padding: 0;
-                /* Resetting display properties for horizontal center */
                 width: auto;
                 height: auto;
+                font-size: 1.4em;
+                padding: 0 15px; /* Add padding for space */
+                text-align: center;
             }
             
             .submenu-grid {
-                grid-template-columns: 1fr; /* Single column for cards */
+                grid-column: 1 / 2;
+                grid-template-columns: 1fr;
                 gap: 15px;
                 padding: 0 10px;
             }
@@ -241,11 +231,11 @@
             Object.keys(groupedItems).forEach(category => {
                 const items = groupedItems[category];
                 
-                // 1. CREATE TITLE WRAPPER (Needed to control the title's grid area)
+                // 1. CREATE TITLE WRAPPER (Stretches the full height of the item group)
                 const titleWrapper = document.createElement('div');
                 titleWrapper.className = 'title-wrapper';
                 
-                // 2. CREATE ROTATED VERTICAL TITLE (LEFT COLUMN)
+                // 2. CREATE ROTATED VERTICAL TITLE 
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'vertical-title';
                 titleDiv.textContent = category.toUpperCase();
@@ -253,7 +243,7 @@
                 titleWrapper.appendChild(titleDiv);
                 menuContainer.appendChild(titleWrapper); // Append wrapper to the grid container
 
-                // 3. CREATE SUBMENU GRID (RIGHT COLUMNS)
+                // 3. CREATE SUBMENU GRID 
                 const gridDiv = document.createElement('div');
                 gridDiv.className = 'submenu-grid';
 
