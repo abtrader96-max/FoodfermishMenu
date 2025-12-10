@@ -51,8 +51,8 @@
         /* --- MAIN STATIC LAYOUT CONTAINER (CSS GRID) --- */
         #menu-container {
             display: grid;
-            /* FIX: Increased title column width to 120px for better clearance */
-            grid-template-columns: 120px 1fr 1fr; 
+            /* FIX: Increased title column width to 150px for guaranteed multi-line visibility */
+            grid-template-columns: 150px 1fr 1fr; 
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
@@ -69,7 +69,6 @@
             justify-content: center;
             margin-bottom: 20px;
             border-left: 5px solid var(--color-highlight-silver);
-            /* Ensure the text is visually contained */
             overflow: visible; 
             padding: 10px 0;
         }
@@ -88,13 +87,12 @@
             /* --- ROTATION STYLING --- */
             transform: rotate(-90deg);
             
-            /* FIX: Set a large fixed width (which becomes vertical height) to force wrapping */
+            /* Fixed width (vertical height) to force wrapping */
             width: 300px; 
             
-            /* Height must be less than the column width (120px) to prevent cut-off */
-            height: 110px; 
+            /* FIX: Increased height to fit the new 150px column width */
+            height: 140px; 
             
-            /* Ensure text is visible */
             overflow: hidden;
             
             transform-origin: center center;
@@ -154,8 +152,8 @@
         /* --- RESPONSIVENESS (Mobile/Tablet) --- */
         @media (max-width: 900px) {
             #menu-container {
-                /* FIX: Increased column width for mobile */
-                grid-template-columns: 100px 1fr;
+                /* FIX: Increased column width for mobile to 120px */
+                grid-template-columns: 120px 1fr;
                 gap: 10px;
                 padding: 0 10px;
             }
@@ -175,9 +173,9 @@
             }
             
             .vertical-title {
-                /* FIX: Adjust width and height for mobile view to ensure wrapping and fit */
+                /* FIX: Increased height for mobile view */
                 width: 200px; 
-                height: 90px; 
+                height: 110px; 
                 font-size: 1.3em;
             }
         }
@@ -209,7 +207,7 @@
         const CSV_FILE_PATH = 'menu_data.csv'; 
         const menuContainer = document.getElementById('menu-container');
 
-        // --- DATA HANDLING FUNCTIONS ---
+        // --- DATA HANDLING FUNCTIONS (No change) ---
 
         function parseCSV(csvText) {
             const lines = csvText.trim().split('\n');
@@ -241,7 +239,7 @@
             }, {});
         }
 
-        // --- RENDERING FUNCTION ---
+        // --- RENDERING FUNCTION (No change) ---
 
         function renderStaticMenu(groupedItems) {
             menuContainer.innerHTML = ''; // Clear loading message
@@ -283,7 +281,7 @@
             });
         }
 
-        // --- MAIN EXECUTION ---
+        // --- MAIN EXECUTION (Includes long category for testing) ---
 
         async function initMenu() {
             const csvText = await fetch(CSV_FILE_PATH).then(r => {
