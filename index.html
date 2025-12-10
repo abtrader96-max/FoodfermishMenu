@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Vertical Menu</title>
+    
+    <style>
+        /* ========================================================
+        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER
+        ========================================================
+        */
+        :root {
+            --color-dark-primary: #181A1B; /* Deep Black/Charcoal */
+            --color-dark-secondary: #2C3A47; /* Dark Slate Gray (Menu Title Background) */
+            --color-highlight-silver: #A9A9A9; /* Silver Accent */
+            --color-light-bg: #EAECEE; /* Light Gray (Submenu Background) */
+            --color-text-light: #FFFFFF; /* White Text */
+            --color-text-dark: #333333; /* Dark Text */
+            
+            --font-heading: 'Helvetica Neue', sans-serif;
+            --font-body: 'Arial', sans-serif;
+        }
+
+        /* --- GLOBAL & HEADER STYLING --- */
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-dark-primary);
+            color: var(--color-text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .menu-header {
+            background-color: var(--color-dark-secondary);
+            color: var(--color-text-light);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        
+        /* --- MAIN VERTICAL LAYOUT CONTAINER --- */
+        #menu-wrapper {
+            display: flex; /* Enables side-by-side layout */
+            max-width: 1400px;
+            margin: 40px auto;
+            border: 1px solid var(--color-dark-secondary);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            background-color: var(--color-dark-secondary);
+        }
+
+        /* --- LEFT SIDE: VERTICAL TITLES (MAIN MENU) --- */
+        #main-menu-titles {
+            width: 200px; /* Fixed width for the vertical titles column */
+            flex-shrink: 0;
+            background-color: var(--color-dark-secondary);
+        }
+
+        .menu-title-button {
+            font-family: var(--font-heading);
+            display: block;
+            width: 100%;
+            padding: 20px 10px;
+            border: none;
+            text-align: left;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: var(--color-dark-secondary);
+            color: var(--color-text-light);
+            transition: all 0.3s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .menu-title-button:hover {
+            background-color: #3f4e5e;
+        }
+
+        .menu-title-button.active {
+            background-color: var(--color-dark-primary); /* Darker background when active */
+            color: var(--color-highlight-silver); /* Highlighted text */
+            border-left: 5px solid var(--color-highlight-silver);
+        }
+        
+        /* --- RIGHT SIDE: SUBMENU CONTENT --- */
+        #submenu-content {
+            flex-grow: 1; /* Takes up all remaining space */
+            background-color: var(--color-light-bg); /* Light background for high contrast */
+            color: var(--color-text-dark);
+            padding: 30px;
+        }
+
+        .submenu-panel {
+            display: none; /* Panels are hidden by default */
+            animation: fadeIn 0.5s;
+        }
+        
+        .submenu-panel.active {
+            display: block;
+        }
+
+        /* Submenu Item Grid Layout */
+        .submenu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item-card {
+            background-color: var(--color-text-light); /* White card */
+            padding: 20px;
+            border-left: 4px solid var(--color-highlight-silver);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .menu-item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .item-name {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: var(--color-dark-secondary);
+            margin-top: 0;
+            margin-bottom: 5px;
+            border-bottom: 1px dashed var(--color-highlight-silver);
+            padding-bottom: 5px;
+        }
+
+        .item-price {
+            font-weight: bold;
+            color: var(--color-highlight-silver);
+            font-size: 1.2em;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="menu-header">
+        <h1>Executive Culinary Selection</h1>
+        <p>Dynamic Menu Organization</p>
+    </header>
+
+    <div id="menu-wrapper">
+        <div id="main-menu-titles">
+            <div style="padding: 20px; text-align: center; color: var(--color-highlight-silver); font-size: 0.9em;">MENU SECTIONS</div>
+        </div>
+
+        <div id="submenu-content">
+            <p id="loading-message">Loading menu data...</p>
+        </div>
+    </div>
+
+    <script>
+        const CSV_FILE_PATH = 'menu_data.csv'; 
+        const mainTitlesContainer = document.getElementById('main-menu-titles');
+        const submenuContentContainer = document.getElementById('submenu-content');
+
+        /**
+         * Parses the raw CSV text into an array of objects. (Same as previous, reliable function)
+         */
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length <= 1) return [];
+            
+            const headers = lines[0].split(',').map(header => header.trim());
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const item = {};
+                
+                for (let j = 0; j < headers.length && j < values.length; j++) {
+                    item[headers[j]] = values[j].trim();
+                }
+                data.push(item);
+            }
+            return data;
+        }
+
+        /**
+         * Groups menu items by Category (Tagline)
+         */
+        function groupByCategory(items) {
+            return items.reduce((accumulator, item) => {
+                const category = item.Category || 'Uncategorized';
+                if (!accumulator[category]) {
+                    accumulator[category] = [];
+                }
+                accumulator[category].push(item);
+                return accumulator;
+            }, {});
+        }
+
+        /**
+         * Renders the entire vertical menu structure based on grouped data.
+         */
+        function renderVerticalMenu(groupedItems) {
+            // Clear loading message and previous content
+            submenuContentContainer.innerHTML = '';
+            
+            let isFirst = true;
+
+            Object.keys(groupedItems).forEach(category => {
+                const items = groupedItems[category];
+                const cleanId = category.replace(/\s+/g, '-').toLowerCase();
+
+                // 1. CREATE VERTICAL TITLE BUTTON
+                const titleButton = document.createElement('button');
+                titleButton.className = 'menu-title-button';
+                titleButton.textContent = category.toUpperCase();
+                titleButton.setAttribute('data-target', cleanId);
+                mainTitlesContainer.appendChild(titleButton);
+
+                // 2. CREATE SUBMENU PANEL (RIGHT SIDE)
+                const panel = document.createElement('div');
+                panel.className = 'submenu-panel';
+                panel.id = cleanId;
+
+                const grid = document.createElement('div');
+                grid.className = 'submenu-grid';
+
+                // 3. Populate the grid with menu item cards
+                items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-item-card';
+                    card.innerHTML = `
+                        <h3 class="item-name">${item.Name}</h3>
+                        <p>${item.Description}</p>
+                        <p class="item-price">$${parseFloat(item.Price).toFixed(2)}</p>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                panel.appendChild(grid);
+                submenuContentContainer.appendChild(panel);
+
+                // Set the first category as active by default
+                if (isFirst) {
+                    titleButton.classList.add('active');
+                    panel.classList.add('active');
+                    isFirst = false;
+                }
+            });
+
+            // 4. ATTACH EVENT LISTENERS FOR INTERACTION
+            document.querySelectorAll('.menu-title-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // Deactivate all buttons and panels
+                    document.querySelectorAll('.menu-title-button').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.submenu-panel').forEach(pnl => pnl.classList.remove('active'));
+                    
+                    // Activate the clicked button and corresponding panel
+                    this.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        }
+
+        /**
+         * Main execution function
+         */
+        async function initMenu() {
+            const csvText = await fetch(CSV_FILE_PATH).then(r => {
+                if (!r.ok) {
+                    throw new Error('Failed to fetch CSV.');
+                }
+                return r.text();
+            }).catch(e => {
+                console.error(e);
+                document.getElementById('loading-message').textContent = "Error loading menu data. Check 'menu_data.csv'.";
+                return null;
+            });
+            
+            if (csvText) {
+                const menuItems = parseCSV(csvText);
+                const groupedItems = groupByCategory(menuItems);
+                renderVerticalMenu(groupedItems);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initMenu);
+    </script>
+</body>
+</html>
