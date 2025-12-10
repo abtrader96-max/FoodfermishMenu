@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfect Vertical Menu Alignment and Spacing</title>
+    <title>Menu with Multi-Line Vertical Titles</title>
     
     <style>
         /* ========================================================
-        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER (FINAL FIX)
+        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER (MULTI-LINE TITLES)
         ========================================================
         */
         :root {
@@ -51,7 +51,7 @@
         /* --- MAIN STATIC LAYOUT CONTAINER (CSS GRID) --- */
         #menu-container {
             display: grid;
-            /* FIX 1: Increased title column width for better spacing */
+            /* Column 1 width remains at 100px */
             grid-template-columns: 100px 1fr 1fr; 
             max-width: 1400px;
             margin: 0 auto;
@@ -59,7 +59,7 @@
             gap: 15px;
         }
         
-        /* 1. TITLE WRAPPER - Stretches to fit the items' height and handles the grid alignment */
+        /* 1. TITLE WRAPPER - Stretches and handles the grid alignment */
         .title-wrapper {
             grid-column: 1 / 2;
             background-color: var(--color-dark-secondary);
@@ -69,31 +69,40 @@
             justify-content: center;
             margin-bottom: 20px;
             border-left: 5px solid var(--color-highlight-silver);
-            /* Ensure the text is visually contained within the 100px column */
-            overflow: hidden; 
+            /* Important: Allow overflow for the rotated text */
+            overflow: visible; 
+            padding: 10px 0; /* Add vertical padding for the rotated text */
         }
         
-        /* 2. VERTICAL TITLE - The actual rotated text */
+        /* 2. VERTICAL TITLE - The actual rotated text which now wraps */
         .vertical-title {
             color: var(--color-highlight-silver);
             font-family: var(--font-heading);
             font-size: 1.5em; 
             font-weight: 600;
             text-transform: uppercase;
+            line-height: 1.2; /* Tighten line height for compact look */
+            text-align: center;
             
-            /* --- ROTATION STYLING (Active for ALL sizes now) --- */
+            /* --- ROTATION STYLING --- */
             transform: rotate(-90deg);
-            white-space: nowrap; 
             
-            /* Adjust padding to pull the rotated text away from the center of the column */
-            padding: 0 10px; 
+            /* FIX: Remove white-space: nowrap and width: max-content */
+            /* Set a width that corresponds to the height you want the rotated text to occupy. 
+               Since it's rotated -90deg, its *width* controls the *vertical* height on the screen. */
+            width: 250px; /* Allows 2-3 lines of text to fit */
             
-            /* Set height/width based on content length for centering */
-            width: max-content; 
-            height: max-content; 
+            /* The 'height' property now controls the visual *width* on the screen. */
+            height: 80px; /* Must be less than the grid column width (100px) */
+            
+            /* Repositioning to stay centered within the 100px column */
+            transform-origin: center center;
+            
+            /* Optional: Add padding inside the text box itself */
+            padding: 5px; 
         }
         
-        /* --- RIGHT COLUMNS: SUBMENU ITEMS --- */
+        /* --- RIGHT COLUMNS: SUBMENU ITEMS (No change here) --- */
         .submenu-grid {
             grid-column: 2 / 4; 
             display: grid;
@@ -146,40 +155,38 @@
         /* --- RESPONSIVENESS (Mobile/Tablet) --- */
         @media (max-width: 900px) {
             #menu-container {
-                /* FIX 2: Switch to two columns on mobile, keeping the title rotated */
                 grid-template-columns: 80px 1fr;
                 gap: 10px;
                 padding: 0 10px;
             }
 
             .title-wrapper {
-                grid-column: 1 / 2; /* Title remains in the first narrow column */
+                grid-column: 1 / 2; 
                 height: auto; 
                 margin-bottom: 10px;
-                /* Adjust padding for mobile view to prevent the text from overlapping the top/bottom container edges */
-                padding: 30px 0; 
+                padding: 20px 0; 
             }
             
             .submenu-grid {
-                grid-column: 2 / 3; /* Items take the wide second column */
-                grid-template-columns: 1fr; /* Single column for cards in the item section */
+                grid-column: 2 / 3; 
+                grid-template-columns: 1fr; 
                 gap: 15px;
                 padding: 0;
             }
             
             .vertical-title {
-                /* The rotation remains, ensuring vertical alignment on mobile */
+                /* On mobile, shrink the width to fit smaller vertical space */
+                width: 150px; 
                 font-size: 1.3em;
             }
         }
         
-        /* Super narrow view fix (e.g., iPhone SE) */
         @media (max-width: 500px) {
             #menu-container {
-                 /* Adjust columns for very small screens */
                 grid-template-columns: 60px 1fr; 
             }
             .vertical-title {
+                width: 120px; /* Shrink even more for very small screens */
                 font-size: 1.1em;
             }
         }
@@ -189,7 +196,7 @@
 
     <header class="menu-header">
         <h1>Executive Culinary Selection</h1>
-        <p>Perfectly Aligned Vertical Menu</p>
+        <p>Vertical Menu with Multi-Line Titles</p>
     </header>
 
     <div id="menu-container">
@@ -240,14 +247,21 @@
             Object.keys(groupedItems).forEach(category => {
                 const items = groupedItems[category];
                 
-                // 1. CREATE TITLE WRAPPER (Stretches the full height of the item group)
+                // 1. CREATE TITLE WRAPPER 
                 const titleWrapper = document.createElement('div');
                 titleWrapper.className = 'title-wrapper';
                 
                 // 2. CREATE ROTATED VERTICAL TITLE 
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'vertical-title';
-                titleDiv.textContent = category.toUpperCase();
+                
+                // Example of a potentially long title for testing:
+                let displayCategory = category.toUpperCase();
+                // If you want to force a line break, you could do this:
+                // if (category.includes(' ')) {
+                //    displayCategory = category.replace(' ', '\n'); 
+                // }
+                titleDiv.textContent = displayCategory;
                 
                 titleWrapper.appendChild(titleDiv);
                 menuContainer.appendChild(titleWrapper); 
@@ -286,6 +300,14 @@
             
             if (csvText) {
                 const menuItems = parseCSV(csvText);
+                // TEST: Add a very long category title to test the wrapping:
+                menuItems.push({
+                    Name: "Special Tasting Plate",
+                    Description: "A selection of seasonal delicacies.",
+                    Price: "99.00",
+                    Category: "Chef's Multi-Course Tasting Menu"
+                });
+                
                 const groupedItems = groupByCategory(menuItems);
                 renderStaticMenu(groupedItems);
             }
