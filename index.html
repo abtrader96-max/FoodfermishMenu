@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Vertical Menu Width</title>
+    <title>Perfect Vertical Menu Alignment and Spacing</title>
     
     <style>
         /* ========================================================
-        EXECUTIVE SUITE THEME: DYNAMIC CALCULATION
+        EXECUTIVE SUITE THEME: BLACK, GRAY, & SILVER (FINAL FIX)
         ========================================================
         */
         :root {
@@ -51,14 +51,15 @@
         /* --- MAIN STATIC LAYOUT CONTAINER (CSS GRID) --- */
         #menu-container {
             display: grid;
-            /* JS will dynamically set the grid-template-columns inline */
+            /* FIX 1: Increased title column width for better spacing */
+            grid-template-columns: 100px 1fr 1fr; 
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
             gap: 15px;
         }
         
-        /* 1. TITLE WRAPPER - This will have dynamic width and static height for rotation */
+        /* 1. TITLE WRAPPER - Stretches to fit the items' height and handles the grid alignment */
         .title-wrapper {
             grid-column: 1 / 2;
             background-color: var(--color-dark-secondary);
@@ -68,33 +69,33 @@
             justify-content: center;
             margin-bottom: 20px;
             border-left: 5px solid var(--color-highlight-silver);
-            overflow: visible; 
+            /* Ensure the text is visually contained within the 100px column */
+            overflow: hidden; 
         }
         
-        /* 2. VERTICAL TITLE - The actual rotated text which now wraps */
+        /* 2. VERTICAL TITLE - The actual rotated text */
         .vertical-title {
             color: var(--color-highlight-silver);
             font-family: var(--font-heading);
             font-size: 1.5em; 
             font-weight: 600;
             text-transform: uppercase;
-            line-height: 1.2; 
-            text-align: center;
             
-            /* --- ROTATION STYLING --- */
+            /* --- ROTATION STYLING (Active for ALL sizes now) --- */
             transform: rotate(-90deg);
+            white-space: nowrap; 
             
-            /* These properties will be set dynamically by JavaScript */
-            width: auto; 
-            height: auto; 
+            /* Adjust padding to pull the rotated text away from the center of the column */
+            padding: 0 10px; 
             
-            transform-origin: center center;
-            padding: 5px; 
+            /* Set height/width based on content length for centering */
+            width: max-content; 
+            height: max-content; 
         }
         
         /* --- RIGHT COLUMNS: SUBMENU ITEMS --- */
         .submenu-grid {
-            /* This column span is set dynamically based on the number of non-title columns */
+            grid-column: 2 / 4; 
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
             gap: 20px;
@@ -142,20 +143,45 @@
             text-align: right;
         }
 
-        /* --- RESPONSIVENESS --- */
-        /* JS handles the dynamic width, but we use CSS media queries to reset the grid layout */
+        /* --- RESPONSIVENESS (Mobile/Tablet) --- */
         @media (max-width: 900px) {
-            /* JS will set grid-template-columns: 80px 1fr */
+            #menu-container {
+                /* FIX 2: Switch to two columns on mobile, keeping the title rotated */
+                grid-template-columns: 80px 1fr;
+                gap: 10px;
+                padding: 0 10px;
+            }
+
+            .title-wrapper {
+                grid-column: 1 / 2; /* Title remains in the first narrow column */
+                height: auto; 
+                margin-bottom: 10px;
+                /* Adjust padding for mobile view to prevent the text from overlapping the top/bottom container edges */
+                padding: 30px 0; 
+            }
+            
             .submenu-grid {
-                grid-column: 2 / 3; 
-                grid-template-columns: 1fr; 
+                grid-column: 2 / 3; /* Items take the wide second column */
+                grid-template-columns: 1fr; /* Single column for cards in the item section */
                 gap: 15px;
                 padding: 0;
             }
+            
+            .vertical-title {
+                /* The rotation remains, ensuring vertical alignment on mobile */
+                font-size: 1.3em;
+            }
         }
         
+        /* Super narrow view fix (e.g., iPhone SE) */
         @media (max-width: 500px) {
-            /* JS will set grid-template-columns: 60px 1fr */
+            #menu-container {
+                 /* Adjust columns for very small screens */
+                grid-template-columns: 60px 1fr; 
+            }
+            .vertical-title {
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
@@ -163,7 +189,7 @@
 
     <header class="menu-header">
         <h1>Executive Culinary Selection</h1>
-        <p>Fully Dynamic Vertical Menu</p>
+        <p>Perfectly Aligned Vertical Menu</p>
     </header>
 
     <div id="menu-container">
@@ -174,17 +200,19 @@
         const CSV_FILE_PATH = 'menu_data.csv'; 
         const menuContainer = document.getElementById('menu-container');
 
-        // --- CORE LOGIC ---
+        // --- DATA HANDLING FUNCTIONS (Same reliable logic) ---
 
         function parseCSV(csvText) {
-            // ... (CSV parsing logic remains the same)
             const lines = csvText.trim().split('\n');
             if (lines.length <= 1) return [];
+            
             const headers = lines[0].split(',').map(header => header.trim());
             const data = [];
+
             for (let i = 1; i < lines.length; i++) {
                 const values = lines[i].split(',');
                 const item = {};
+                
                 for (let j = 0; j < headers.length && j < values.length; j++) {
                     item[headers[j]] = values[j].trim();
                 }
@@ -204,104 +232,22 @@
             }, {});
         }
 
-        /**
-         * Dynamically calculates the required grid column width based on the longest title.
-         * @param {Object} groupedItems - Grouped menu data.
-         * @returns {number} The required column width in pixels.
-         */
-        function calculateDynamicColumnWidth(groupedItems) {
-            const categories = Object.keys(groupedItems);
-            let maxWidth = 0;
-            const PADDING = 25; // Extra padding for the final column width
+        // --- RENDERING FUNCTION ---
 
-            // 1. Temporarily create a dummy element to measure text width (before rotation)
-            const dummy = document.createElement('div');
-            dummy.style.position = 'absolute';
-            dummy.style.visibility = 'hidden';
-            dummy.style.fontSize = '1.5em'; // Must match .vertical-title font-size
-            dummy.style.fontWeight = '600'; // Must match .vertical-title font-weight
-            dummy.style.fontFamily = `'Helvetica Neue', sans-serif`; 
-            dummy.style.textTransform = 'uppercase';
-            dummy.style.whiteSpace = 'nowrap'; // Measure non-wrapped width first
-            document.body.appendChild(dummy);
-
-            categories.forEach(category => {
-                dummy.textContent = category.toUpperCase();
-                // We are measuring the length of the string, which will become the *vertical* height.
-                const textLength = dummy.offsetWidth; 
-                
-                // For safety, we set a maximum width that the text will occupy before wrapping (e.g., 300px).
-                // If the text is shorter, we use its natural length.
-                // We use the full text length here because the title's width will be set dynamically later.
-                maxWidth = Math.max(maxWidth, textLength);
-            });
-
-            document.body.removeChild(dummy);
-
-            // The final width of the grid column should be based on the required height of the ROTATED text.
-            // Since the text can wrap, we need to consider how many lines it takes.
-            // For a single line of text (like 'APPETIZERS'), the width is its height + padding.
-            // For multi-line text, the width is constant (e.g., 120px) but the height is dynamic.
-            
-            // To be truly dynamic, we base the final column width on the longest SINGLE-LINE title.
-            // If the titles are designed to wrap (as requested), we can limit the measured size 
-            // to a practical maximum (e.g., 100px) which corresponds to a 2-line title.
-            
-            // However, since the user wants the column to adjust dynamically based on length, 
-            // we use the max measured single-line width, which becomes the required vertical height.
-            
-            let finalWidth = Math.min(maxWidth, 300) + PADDING; // Cap the auto-sizing to 300px for extreme safety
-            
-            // Return the calculated width, or a minimum default.
-            return Math.max(finalWidth, 120); 
-        }
-
-        /**
-         * Renders the menu with dynamic width applied.
-         */
         function renderStaticMenu(groupedItems) {
-            menuContainer.innerHTML = ''; 
+            menuContainer.innerHTML = ''; // Clear loading message
 
-            // 1. Determine the maximum required column width (based on the longest category title)
-            const dynamicTitleWidth = calculateDynamicColumnWidth(groupedItems);
-            const numContentColumns = 2; // Two columns for item cards
-            
-            let titleColWidth;
-            let contentColSpan;
-
-            // Handle responsiveness and inject the style immediately
-            if (window.innerWidth < 900) {
-                 // For mobile, switch to a more conservative fixed column width
-                 titleColWidth = window.innerWidth < 500 ? 60 : 80;
-                 contentColSpan = '1 / 3'; // 1 content column
-                 menuContainer.style.gridTemplateColumns = `${titleColWidth}px 1fr`;
-            } else {
-                 // Desktop: Use the dynamically calculated width for the title column
-                 titleColWidth = dynamicTitleWidth; 
-                 contentColSpan = '2 / 4'; // 2 content columns
-                 menuContainer.style.gridTemplateColumns = `${titleColWidth}px repeat(${numContentColumns}, 1fr)`;
-            }
-
-            // 2. Render content using the calculated widths
             Object.keys(groupedItems).forEach(category => {
                 const items = groupedItems[category];
                 
-                // 1. CREATE TITLE WRAPPER 
+                // 1. CREATE TITLE WRAPPER (Stretches the full height of the item group)
                 const titleWrapper = document.createElement('div');
                 titleWrapper.className = 'title-wrapper';
                 
                 // 2. CREATE ROTATED VERTICAL TITLE 
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'vertical-title';
-                let displayCategory = category.toUpperCase();
-                titleDiv.textContent = displayCategory;
-                
-                // Set the width of the rotated text element (which determines the vertical height)
-                // This is a fixed large width to ensure wrapping happens inside the titleDiv.
-                const titleWidth = window.innerWidth < 900 ? '200px' : '300px'; 
-                const titleHeight = window.innerWidth < 900 ? '70px' : (titleColWidth - 10) + 'px'; // Height must be less than the calculated column width
-                titleDiv.style.width = titleWidth;
-                titleDiv.style.height = titleHeight;
+                titleDiv.textContent = category.toUpperCase();
                 
                 titleWrapper.appendChild(titleDiv);
                 menuContainer.appendChild(titleWrapper); 
@@ -309,7 +255,6 @@
                 // 3. CREATE SUBMENU GRID 
                 const gridDiv = document.createElement('div');
                 gridDiv.className = 'submenu-grid';
-                gridDiv.style.gridColumn = contentColSpan; // Apply dynamic span
 
                 // 4. Populate the grid with menu item cards
                 items.forEach(item => {
@@ -325,9 +270,6 @@
 
                 menuContainer.appendChild(gridDiv); 
             });
-            
-            // Re-run rendering on resize to dynamically adjust the column width
-            window.addEventListener('resize', () => renderStaticMenu(groupedItems));
         }
 
         // --- MAIN EXECUTION ---
@@ -344,15 +286,6 @@
             
             if (csvText) {
                 const menuItems = parseCSV(csvText);
-                
-                // Adding a very long test entry to guarantee multi-line wrapping is tested
-                menuItems.push({
-                    Name: "Special Tasting Plate",
-                    Description: "A selection of seasonal delicacies and appetizers from the region.",
-                    Price: "99.00",
-                    Category: "Chef's Extended Signature Multi-Course Tasting Menu"
-                });
-                
                 const groupedItems = groupByCategory(menuItems);
                 renderStaticMenu(groupedItems);
             }
